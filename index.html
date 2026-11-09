@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loomkit – free cloud image & video studio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="gate" class="gate">
+  <div class="gate-box">
+    <h1>Loomkit</h1>
+    <p>This studio can produce adult content. You must be 18 or older to continue.</p>
+    <label><input type="checkbox" id="g1"> I am 18 or older.</label>
+    <label><input type="checkbox" id="g2"> I will only create characters that are fictional or that I have the clear permission of the real person to depict. I will never depict minors or real people without consent.</label>
+    <button id="gateBtn" class="primary" disabled>Enter studio</button>
+  </div>
+</div>
+
+<header>
+  <b class="logo">Loomkit</b>
+  <nav id="tabs">
+    <button data-tab="create" class="on">Create</button>
+    <button data-tab="characters">Characters</button>
+    <button data-tab="gallery">Gallery</button>
+    <button data-tab="engine">Engine</button>
+  </nav>
+  <span id="engineDot" class="dot" title="Cloud engine status"></span>
+</header>
+
+<main>
+<section id="tab-create" class="tab on">
+  <div class="panel controls">
+    <label>Mode
+      <select id="mode">
+        <option value="t2i">Text → Image</option>
+        <option value="i2i">Image → Image</option>
+        <option value="t2v">Text → Video</option>
+        <option value="i2v">Image → Video</option>
+        <option value="c2i">Character → Image</option>
+        <option value="c2v">Character → Video</option>
+      </select>
+    </label>
+    <label>Model <select id="model"></select></label>
+    <label id="customWrap" hidden>Custom Hugging Face repo (cloud engine)
+      <input id="customModel" placeholder="owner/model-name"></label>
+    <label>Prompt <textarea id="prompt" rows="4" placeholder="Describe the scene…"></textarea></label>
+    <label>Negative prompt <textarea id="neg" rows="2">lowres, bad anatomy, extra fingers, blurry, watermark, text</textarea></label>
+    <label id="charWrap" hidden>Character <select id="charSel"></select></label>
+    <label id="initWrap" hidden>Starting image <input type="file" id="initFile" accept="image/*"></label>
+    <label id="strWrap" hidden>Change amount <span id="strV">0.6</span>
+      <input type="range" id="strength" min="0.1" max="1" step="0.05" value="0.6"></label>
+    <div class="row">
+      <label>Width <select id="w"><option>512</option><option selected>640</option><option>768</option><option>1024</option></select></label>
+      <label>Height <select id="h"><option>512</option><option selected>640</option><option>768</option><option>1024</option></select></label>
+    </div>
+    <div class="row">
+      <label>Steps <input type="number" id="steps" value="28" min="5" max="60"></label>
+      <label>Guidance <input type="number" id="cfg" value="7" min="1" max="15" step="0.5"></label>
+      <label>Seed <input type="number" id="seed" placeholder="random"></label>
+    </div>
+    <div class="row" id="vidRow" hidden>
+      <label>Frames <input type="number" id="frames" value="49" min="9" max="161" step="8"></label>
+      <label>FPS <input type="number" id="fps" value="24" min="8" max="30"></label>
+    </div>
+    <label class="check"><input type="checkbox" id="nsfw" checked> Allow adult content</label>
+    <button id="go" class="primary">Generate</button>
+    <p id="status" class="status"></p>
+  </div>
+  <div class="panel stage" id="stage"><p class="empty">Your result appears here and is saved to the Gallery automatically.</p></div>
+</section>
+
+<section id="tab-characters" class="tab">
+  <div class="panel controls">
+    <h2>New character</h2>
+    <label>Name <input id="cName"></label>
+    <label>Look description (added to every prompt) <textarea id="cDesc" rows="3" placeholder="e.g. young woman, green eyes, short red hair, freckles"></textarea></label>
+    <label>Reference images (3–10 recommended) <input type="file" id="cFiles" accept="image/*" multiple></label>
+    <div id="cPrev" class="thumbs"></div>
+    <button id="cSave" class="primary">Save character</button>
+    <p class="hint">Only use fictional characters or people who consented. Cloud engine uses all references (IP-Adapter). The free Horde engine uses the first reference as a guide plus your description.</p>
+  </div>
+  <div class="panel"><h2>Your characters</h2><div id="cList" class="cards"></div></div>
+</section>
+
+<section id="tab-gallery" class="tab">
+  <div class="panel wide">
+    <div class="row between"><h2>Gallery</h2><button id="clearAll">Delete all</button></div>
+    <div id="gal" class="grid"></div>
+  </div>
+</section>
+
+<section id="tab-engine" class="tab">
+  <div class="panel wide prose">
+    <h2>Free cloud engines</h2>
+    <p><b>1. AI Horde (images, nothing to set up).</b> Volunteer GPUs generate for free, and adult content is allowed. Works out of the box on any device. Optional: paste a free key from <a href="https://aihorde.net/register" target="_blank" rel="noopener">aihorde.net</a> for a shorter queue.</p>
+    <label>AI Horde key <input id="hordeKey" placeholder="0000000000 (anonymous)"></label>
+    <p><b>2. Your own Google Colab GPU (video, character-to-video, extra image models).</b> Open <code>colab_backend.py</code> in a new Colab notebook (Runtime → T4 GPU), run it, and paste the link it prints:</p>
+    <label>Cloud engine URL <input id="backend" placeholder="https://something.trycloudflare.com"></label>
+    <div class="row"><button id="saveEngine" class="primary">Save &amp; test</button><span id="engineMsg" class="status"></span></div>
+  </div>
+</section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
