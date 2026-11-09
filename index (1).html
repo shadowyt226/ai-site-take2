@@ -95,7 +95,7 @@
     <h2>Free cloud engines</h2>
     <p><b>1. AI Horde (images, nothing to set up).</b> Volunteer GPUs generate for free, and adult content is allowed. Works out of the box on any device. Optional: paste a free key from <a href="https://aihorde.net/register" target="_blank" rel="noopener">aihorde.net</a> for a shorter queue.</p>
     <label>AI Horde key <input id="hordeKey" placeholder="0000000000 (anonymous)"></label>
-    <p><b>2. Your own Google Colab GPU (video, character-to-video, extra image models).</b> Open <code>colab_backend.py</code> in a new Colab notebook (Runtime → T4 GPU), run it, and paste the link it prints:</p>
+    <p><b>2. Your own Google Colab GPU (video, character-to-video, extra image models).</b> Upload <code>Loomkit_Colab_Engine.ipynb</code> at colab.research.google.com (File → Upload notebook), set Runtime → T4 GPU, run every cell, and paste the link it prints:</p>
     <label>Cloud engine URL <input id="backend" placeholder="https://something.trycloudflare.com"></label>
     <div class="row"><button id="saveEngine" class="primary">Save &amp; test</button><span id="engineMsg" class="status"></span></div>
   </div>
